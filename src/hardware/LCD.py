@@ -8,7 +8,7 @@ class LCD:
         self.lcd.clear()
 
     def write(self, text, line=0):
-        if line < 0 or line >= self.lcd.rows:
+        if line < 0 or line >= self.lcd._rows:
             raise ValueError("Line number out of range")
         self.lcd.cursor_pos = (line, 0)
         self.lcd.write_string(text.ljust(self.lcd.cols)[:self.lcd.cols])

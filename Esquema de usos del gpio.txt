@@ -1,0 +1,16 @@
+Esquema de usos del gpio
+
+Teclado matricial [PASIVO - sin GND]:  
+	Filas = 5,6,13,19 (29,31,33,35)
+	columnas = 12,16,20,21 (32,36,38,40)
+
+LCD [ACTIVO - 5V]:
+	SDA = 2 (3)
+	SCL = 3 (5)
+	
+Buzzer [PASIVO - con GND]
+	Salida = 26 (37)
+
+Bascula [ACTIVO - 5V]
+	DT = 17 (11)
+	SCL = 27 (13)

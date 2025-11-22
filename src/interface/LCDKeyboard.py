@@ -30,30 +30,30 @@ class LCDKeyboard(Thread):
             time.sleep(2)
             self.lcd.clear()
 
-def parse_instruccion(self, instruction: str):
-    try:
-        pieces = instruction.strip().upper().split()
-        if len(pieces) < 3:
-            raise ValueError("Formato esperado: <A|B> HH MM (ej: 'A 12 30')")
+    def parse_instruccion(self, instruction: str):
+        try:
+            pieces = instruction.strip().upper().split()
+            if len(pieces) < 3:
+                raise ValueError("Formato esperado: <A|B> HH MM (ej: 'A 12 30')")
 
-        accion = pieces[0]
-        hora = pieces[1]
-        minuto = pieces[2]
+            accion = pieces[0]
+            hora = pieces[1]
+            minuto = pieces[2]
 
-        if accion == "A":
-            tipo = "ADD"
-            self.lcd.write("Añadiendo instruccion", line=0)
-        elif accion == "B":
-            tipo = "DEL"
-            self.lcd.write("Borrando instruccion", line=0)
-        else:
-            raise ValueError("Accion desconocida, usa A o B")
+            if accion == "A":
+                tipo = "ADD"
+                self.lcd.write("Añadiendo instruccion", line=0)
+            elif accion == "B":
+                tipo = "DEL"
+                self.lcd.write("Borrando instruccion", line=0)
+            else:
+                raise ValueError("Accion desconocida, usa A o B")
 
-        print(f"{tipo} || Hora: {hora}, Minuto: {minuto}")
+            print(f"{tipo} || Hora: {hora}, Minuto: {minuto}")
 
-    except Exception as e:
-        self.lcd.write("Instruccion no identificada", line=0)
-        print("Error al parsear la instruccion:", e)
+        except Exception as e:
+            self.lcd.write("Instruccion no identificada", line=0)
+            print("Error al parsear la instruccion:", e)
 
 
 if __name__ == "__main__":

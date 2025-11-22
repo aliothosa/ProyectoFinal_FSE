@@ -39,3 +39,6 @@ class LCDKeyboard(Thread):
         hora, minuto = pieces[::2]
         print(f"{instruction} || Hora: {hora}, Minuto: {minuto}")
 
+if __name__ == "__main__":
+    lcd_keyboard = LCDKeyboard()
+    lcd_keyboard.start()

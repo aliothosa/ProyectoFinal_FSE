@@ -14,7 +14,7 @@ class LCDKeyboard(Thread):
 
     def run(self):
         try:
-            self.lcd.write("Ingrese instruccion:", line=0)
+            self.lcd.write("Instruccion:", line=0)
             while True:
                 self.lcd.write(self.keyboard.get_string(), line=1)
                 if not self.queue.empty():
@@ -42,7 +42,9 @@ class LCDKeyboard(Thread):
 
             if accion == "A":
                 tipo = "ADD"
-                self.lcd.write("Añadiendo instruccion", line=0)
+                self.lcd.write("Dispe ", line=0)
+                self.lcd.write(f"Hora:  ", line=1)
+                time.sleep(4)
             elif accion == "B":
                 tipo = "DEL"
                 self.lcd.write("Borrando instruccion", line=0)

@@ -35,11 +35,11 @@ class MatrixKeyboard(Thread):
                 if key == 'D':  
                     self.output_queue.put(self._string_output)
                     self.clear()
-                if key == 'C':  
+                elif key == 'C':  
                     self.erase_last()
-                if key == '*':
+                elif key == '*':
                     self._string_output += ' '
-                if key is not None:
+                elif key is not None:
                     self._string_output += key
                 
                 

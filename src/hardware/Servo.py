@@ -48,7 +48,7 @@ finally:
     pi.stop()
 
 class Servo:
-    def __init__(self, servo_pin=18):
+    def __init__(self, servo_pin=16)
         self.servo_pin = servo_pin
         self.pi = pigpio.pi()
         if not self.pi.connected:

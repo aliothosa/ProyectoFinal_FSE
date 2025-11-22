@@ -37,6 +37,8 @@ class MatrixKeyboard(Thread):
                     self.clear()
                 if key == 'C':  
                     self.erase_last()
+                if key == '*':
+                    self._string_output += ' '
                 if key is not None:
                     self._string_output += key
                 

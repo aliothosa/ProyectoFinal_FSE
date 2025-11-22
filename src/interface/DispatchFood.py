@@ -32,3 +32,6 @@ def dispatch_food(objetivo_gramos: float, tolerancia_gramos: float = 5.0):
 
     finally:
         print("Peso final:", load_cell.get_weight(), "g")
+
+if __name__ == "__main__":
+    dispatch_food(200)# Desp

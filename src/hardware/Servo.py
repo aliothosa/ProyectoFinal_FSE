@@ -2,7 +2,6 @@ import time
 import pigpio
 
 
-
 class Servo:
     def __init__(self, servo_pin=23):
         self.servo_pin = servo_pin

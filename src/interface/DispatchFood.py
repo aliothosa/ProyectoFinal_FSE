@@ -2,9 +2,11 @@ from src.hardware.LoadCell import LoadCell
 from src.hardware.Servo import Servo
 import time
 
+OFFSET_LOAD_CELL = -464106.52  # Ajustar si se conoce un offset específico
+
 
 def dispatch_food(objetivo_gramos: float, tolerancia_gramos: float = 5.0):
-    load_cell = LoadCell()
+    load_cell = LoadCell(offset=OFFSET_LOAD_CELL)
     servo = Servo()
 
     print(f"Despachando comida para alcanzar {objetivo_gramos} g (±{tolerancia_gramos} g)...")

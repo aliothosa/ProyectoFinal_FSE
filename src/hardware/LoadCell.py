@@ -1,4 +1,5 @@
 import time
+from typing import Union
 import RPi.GPIO as GPIO
 from hx711 import HX711
 
@@ -16,7 +17,7 @@ CALIBRACION = 412.0  # Ajustable según afinación fina
 
 
 class LoadCell:
-    def __init__(self, dt_pin=DT, sck_pin=SCK, calibration_factor=CALIBRACION, offset:int=None):
+    def __init__(self, dt_pin=DT, sck_pin=SCK, calibration_factor=CALIBRACION, offset:Union[float, None]= None):
         self.hx = HX711(dout_pin=dt_pin, pd_sck_pin=sck_pin)
         self.calibration_factor = calibration_factor
         if offset:

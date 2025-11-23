@@ -16,11 +16,14 @@ CALIBRACION = 412.0  # Ajustable según afinación fina
 
 
 class LoadCell:
-    def __init__(self, dt_pin=DT, sck_pin=SCK, calibration_factor=CALIBRACION):
+    def __init__(self, dt_pin=DT, sck_pin=SCK, calibration_factor=CALIBRACION, offset:int=None):
         self.hx = HX711(dout_pin=dt_pin, pd_sck_pin=sck_pin)
         self.calibration_factor = calibration_factor
-        self.offset = 0.0
-        self.tare()
+        if offset:
+            self.offset = offset
+        else:
+            self.offset = 0.0
+            self.tare()
 
     def tare(self, samples=50):
         print("Taring load cell...")

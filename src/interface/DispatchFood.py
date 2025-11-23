@@ -5,7 +5,6 @@ import time
 
 def dispatch_food(objetivo_gramos: float, tolerancia_gramos: float = 5.0):
     load_cell = LoadCell()
-    load_cell.tare()
     servo = Servo()
 
     print(f"Despachando comida para alcanzar {objetivo_gramos} g (±{tolerancia_gramos} g)...")
@@ -32,8 +31,8 @@ def dispatch_food(objetivo_gramos: float, tolerancia_gramos: float = 5.0):
         print("Despacho interrumpido por el usuario.")
 
     finally:
-        servo.set_angle(0)  # Cerrar compuerta
+        servo.set_angle(65)  # Cerrar compuerta
         print("Peso final:", load_cell.get_weight(), "g")
 
 if __name__ == "__main__":
-    dispatch_food(200)# Desp
+    dispatch_food(120)# Desp

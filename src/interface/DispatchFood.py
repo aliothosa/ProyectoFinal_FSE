@@ -27,7 +27,7 @@ def dispatch_food(objetivo_gramos: float, tolerancia_gramos: float = 5.0):
                 print("Objetivo alcanzado.")
                 break
 
-            time.sleep(0.5)
+            time.sleep(0.1)
 
     except KeyboardInterrupt:
         print("Despacho interrumpido por el usuario.")

@@ -33,7 +33,7 @@ class LoadCell:
         self.offset = sum(tara_muestras) / len(tara_muestras)
         print(f"Tare complete. Offset = {self.offset}")
 
-    def get_weight(self, samples=10):
+    def get_weight(self, samples=5):
         lecturas = self.hx.get_raw_data(samples)
         promedio = sum(lecturas) / len(lecturas)
         neto_crudo = promedio - self.offset

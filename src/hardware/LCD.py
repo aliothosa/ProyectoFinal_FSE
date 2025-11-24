@@ -9,6 +9,12 @@ class LCD:
 
     def clear(self):
         self.lcd.clear()
+        self.lcd.clear()
+        self.lcd.cursor_pos = (0, 0)
+        self.lcd.write_string(" " * 16)
+        self.lcd.cursor_pos = (1, 0)
+        self.lcd.write_string(" " * 16)
+        self.lcd.home()
 
     def write(self, text, line=0):
         if line < 0 or line >= self.rows:   # <-- usas tus propios valores

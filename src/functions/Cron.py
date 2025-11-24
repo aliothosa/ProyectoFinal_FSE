@@ -1,5 +1,6 @@
 from __future__ import annotations
 import subprocess, json
+import sys
 from unittest import case
 from src.interface.Instructions import Tarea
 from copy import deepcopy
@@ -84,7 +85,7 @@ def despachar_tarea(tarea: Tarea, hora:str, minuto: str,
                 mensaje = "Todas borradas"
 
             case Tarea.DISPENSAR_COMIDA:
-                subprocess.run(['python3', 'scripts/dispensa_comida.py'], check=True)
+                subprocess.run([sys.executable, 'scripts/dispensa_comida.py'], check=True)
                 mensaje = "Dispensado ok"
 
             case Tarea.OBTENER_IDS_TAREAS:

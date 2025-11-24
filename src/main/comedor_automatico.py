@@ -36,7 +36,6 @@ class ListenerBoton(Thread):
         self.interface.clear()
         self.interface.force_write("Bienvenido      ", line=0)
 
-
         while self.engage:
             try:
                 self.interface.clear()

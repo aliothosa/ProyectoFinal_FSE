@@ -34,23 +34,24 @@ class ListenerBoton(Thread):
         self.interface.start()
         t_inicial = time.perf_counter()
         self.interface.clear()
-        self.interface.post_write("Bienvenido      ", line=0)
+        self.interface.force_write("Bienvenido      ", line=0)
 
         while self.engage:
             try:
-
-                self.interface.post_write("Instruccion:    ", line=0)
+                self.interface.clear()
+                self.interface.force_write("Instruccion:    ", line=0)
                 if not self.q.empty():
                     instruccion, hora, minuto = self.q.get()
                     mensaje = despachar_tarea(instruccion, f"{hora}", f"{minuto}")
-                    self.interface.post_write_rotate(mensaje, line=0)
+                    
+                    self.interface.force_write_rotate(mensaje, line=0)
 
                     t_inicial = time.perf_counter()
 
                 time_since_last_instruction = time.perf_counter() - t_inicial
 
                 if time_since_last_instruction > 120.0:
-                    self.interface.post_write("Tiempo de inactividad excedido", line=0)
+                    self.interface.force_write_rotate("Tiempo de inactividad excedido", line=0)
                     self.engage = False
                     break
                 time.sleep(0.5) 

@@ -3,6 +3,7 @@ from src.hardware.MatrixKeyboard import MatrixKeyboard
 from src.interface.Instructions import Tarea
 from queue import Queue
 from threading import Thread
+
 import time
 
 class LCDKeyboard(Thread):
@@ -11,20 +12,12 @@ class LCDKeyboard(Thread):
         self.lcd = LCD()
         self.queue = Queue()
         self.queue_salida = q
-        self.queue_entrada = Queue()
         self.keyboard = MatrixKeyboard(self.queue)
         self.keyboard.start()
 
     def run(self):
         try:
             while True:
-                if not self.queue_entrada.empty():
-                    message, line, rotate = self.queue_entrada.get()
-                    if rotate:
-                        self.lcd.write_rotate(message, line=line)
-                    else:
-                        self.lcd.write(message, line=line)
-
                 self.lcd.write(self.keyboard.get_string(), line=1)
                 if not self.queue.empty():
                     self.parse_instruccion(self.queue.get())
@@ -84,14 +77,14 @@ class LCDKeyboard(Thread):
             
             print("Error al parsear la instruccion:", e)
 
-    def post_write(self, message: str, line: int = 0):
-        self.queue_entrada.put((message, line, False))
+    def force_write(self, message: str, line: int = 0):
+        self.lcd.write(message, line=line)
     
     def clear(self):
         self.lcd.clear()
 
-    def post_write_rotate(self, message: str, line: int = 0):
-        self.queue_entrada.put((message, line, True))
+    def force_write_rotate(self, message: str, line: int = 0):
+        self.lcd.write_rotate(message, line=line)
     
     def force_clear_line(self, line: int = 0):
         self.lcd.write(" " * 16, line=line)

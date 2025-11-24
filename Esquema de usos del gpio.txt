@@ -20,6 +20,6 @@ Servo [ACTIVO - 5V]
 	Salida = 23 (16)
 
 PushButton [PASIVO - con GND]
-	Salida = 18
+	Salida = 18 (12)
 
 	

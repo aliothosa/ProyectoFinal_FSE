@@ -18,7 +18,7 @@ def dispatch_food(objetivo_gramos: float, tolerancia_gramos: float = 5.0):
         if peso_inicial >= objetivo_gramos:
             print("El peso inicial ya cumple o excede el objetivo. No se requiere despacho.")
             return
-        servo.set_angle(170)  # Abrir compuerta
+        servo.set_angle(165)  # Abrir compuerta
         time.sleep(1)  # Esperar a que la comida comience a fluir
         while True:
             peso_actual = load_cell.get_weight()
@@ -29,7 +29,12 @@ def dispatch_food(objetivo_gramos: float, tolerancia_gramos: float = 5.0):
                 break
 
             time.sleep(0.1)
+        servo.set_angle(65)  # Cerrar compuerta
+        time.sleep(1)
+        print("Peso final:", load_cell.get_weight(), "g")
+
         buzzer.play_sound("C5", duration=3.0)
+        time.sleep(1)
 
     except KeyboardInterrupt:
         print("Despacho interrumpido por el usuario.")

@@ -50,7 +50,10 @@ class ListenerBoton(Thread):
                 time_since_last_instruction = time.perf_counter() - t_inicial
 
                 if time_since_last_instruction > 120.0:
-                    self.interface.post_write("Tiempo de inactividad excedido", line=0)
+                    self.interface.post_write("inactividad sup ", line=0)
+                    self.interface.post_write("Saliendo...     ", line=1)
+                    self.interface.clear()
+                    time.sleep(5)
                     self.engage = False
                     break
                 time.sleep(0.5) 
@@ -59,6 +62,13 @@ class ListenerBoton(Thread):
                 print("Error en el loop principal:", e)
                 self.engage = False
                 break
+
+            finally:
+
+                self.interface.stop()
+                self.interface.join()
+                del self.interface
+                del self.q
 
 if __name__ == "__main__":
     try:

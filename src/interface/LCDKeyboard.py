@@ -14,10 +14,11 @@ class LCDKeyboard(Thread):
         self.queue_entrada = Queue()
         self.keyboard = MatrixKeyboard(self.queue)
         self.keyboard.start()
+        self.active = True
 
     def run(self):
         try:
-            while True:
+            while self.active:
                 if not self.queue_entrada.empty():
                     message, line, rotate = self.queue_entrada.get()
                     if rotate:
@@ -83,6 +84,10 @@ class LCDKeyboard(Thread):
             self.lcd.write_rotate("Instruccion no identificada", line=0)
             
             print("Error al parsear la instruccion:", e)
+    def stop(self):
+        self.active = False
+        self.keyboard.stop()
+        self.keyboard.join()
 
     def post_write(self, message: str, line: int = 0):
         self.queue_entrada.put((message, line, False))

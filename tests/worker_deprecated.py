@@ -1,19 +1,3 @@
-from __future__ import annotations
-import subprocess, json, threading, time
-from enum import Enum, auto
-from typing import List, Dict
-from queue import Queue, Empty
-
-# def main():
-#     with open('data/times.json', 'r') as f:
-#         times = json.load(f)    
-
-#     while parse_bool(os.getenv('DAEMON_CRON_ENABLED', 'True')):
-class Tarea(Enum):
-    ELIMINAR_TAREA = auto()
-    AGREGAR_TAREA = auto()
-    OBTENER_IDS_TAREAS = auto()
-    FINALIZAR = auto()
 
 class Evento:
     def __init__(self, tipo:Tarea, datos:Dict, respuesta:List):

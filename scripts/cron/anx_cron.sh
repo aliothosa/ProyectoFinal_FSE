@@ -1,19 +1,19 @@
 #!/usr/bin/env bash
-# Script: cron_update.sh
+# Script: anx_cron.sh
 # Uso:
-#   ./cron_update.sh add HH MM ID
-#   ./cron_update.sh del ID
+#   ./anx_cron.sh add HH MM ID
+#   ./anx_cron.sh del ID
 
 set -euo pipefail
 
 # Configuración de variables
 
 # Direccion del interprete de python
-PYTHON="$HOME/Projects/ProyectoFinal_FSE/venvFSE/bin/python3" 
+PYTHON=$HOME/Projects/ProyectoFinal_FSE/venvFSE/bin/python3
 # Direccion del script programado para ejecutarse.
-SCRIPT="$HOME/Projects/scripts/dispensa_comida.py"
+SCRIPT=$HOME/Projects/ProyectoFinal_FSE/scripts/dispensa_comida.py
 # Direccion del directorio de logs para la ejecución del script por si suceden errores
-LOG_DIR="$HOME/cron_logs"
+LOG_DIR=$HOME/cron_logs
 # Definición fine un entorno limpio y predecible dentro del cron.
 CRON_PATH="/usr/local/bin:/usr/bin:/bin"
 
@@ -32,16 +32,21 @@ valid_hhmm() {
 add_entry() {
   local hh="$1" mm="$2" id="$3"
   local log="$LOG_DIR/dispensa_${id}.log"
-  local line="$mm $hh * * * /usr/bin/env PATH=$CRON_PATH \"$PYTHON\" \"$SCRIPT\" >> \"$log\" 2>&1  # tag:$id"
+  local line="$mm $hh * * * /usr/bin/env PATH=$CRON_PATH $PYTHON $SCRIPT >> $log 2>&1  # tag:$id"
   # borra previo y añade el nuevo
-  (crontab -l 2>/dev/null | grep -v "# tag:$id"; echo "$line") | crontab -
+  {
+    crontab -l 2>/dev/null | grep -v "# tag:$id" || true
+    echo "$line"
+  } | crontab -
   echo "True; Añadido/actualizado ID=$id ($hh:$mm)"
 }
 
 # Eliminación de una ejecución del cron.
 del_entry() {
   local id="$1"
-  crontab -l 2>/dev/null | grep -v "# tag:$id" | crontab -
+  {
+    crontab -l 2>/dev/null | grep -v "# tag:$id" || true
+  } | crontab -
   echo "TRUE; Eliminado ID=$id"
 }
 

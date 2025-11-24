@@ -1,5 +1,6 @@
 from queue import Queue
 import RPi.GPIO as GPIO
+from interface.Instructions import Tarea
 from src.interface.LCDKeyboard import LCDKeyboard
 from src.functions.Cron import despachar_tarea
 import time
@@ -32,16 +33,22 @@ class ListenerBoton(Thread):
         self.interface = LCDKeyboard(q=self.q)
         self.interface.start()
         t_inicial = time.perf_counter()
+        self.interface.force_write(" " * 16, line=0)
         self.interface.force_write("Bienvenido", line=0)
+        self.interface.force_write(" " * 16, line=1)
+
 
         while self.engage:
             try:
                 if not self.q.empty():
                     instruccion, hora, minuto = self.q.get()
                     mensaje = despachar_tarea(instruccion, f"{hora}", f"{minuto}")
-                    if mensaje:
-                        self.interface.force_write(mensaje, line=0)
-                        self.interface.sleep(5)
+                    
+                    if mensaje and instruccion == Tarea.OBTENER_IDS_TAREAS:
+                        self.interface.force_write_rotate(mensaje, line=0)
+
+                    elif mensaje:
+                        self.interface.force_write_rotate(mensaje, line=0)
 
                     t_inicial = time.perf_counter()
 

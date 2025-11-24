@@ -63,11 +63,10 @@ class ListenerBoton(Thread):
                 self.engage = False
                 break
 
-            finally:
-                self.interface.stop()
-                self.interface.join()
-                del self.interface
-                del self.q
+        self.interface.stop()
+        self.interface.join()
+        del self.interface
+        del self.q
 
 if __name__ == "__main__":
     try:

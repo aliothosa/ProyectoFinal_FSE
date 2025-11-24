@@ -3,6 +3,7 @@ import termios
 import tty
 from queue import Queue
 from threading import Thread
+
 class KeyboardListener:
     def __init__(self):
         self.running = True

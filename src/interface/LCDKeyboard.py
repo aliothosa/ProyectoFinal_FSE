@@ -48,6 +48,7 @@ class LCDKeyboard(Thread):
             elif len(pieces) == 2 and pieces[0] == 'BB':
                 hora = pieces[1]
                 if not hora.isdigit() or not (0 <= int(hora) <= 23):
+                    self.lcd.write_rotate("Hora invalida, usa 00-23", line=0)
                     return
                 
                 self.queue_salida.put((Tarea.BORRAR_TAREAS_HORA, int(hora), 0))
@@ -55,6 +56,7 @@ class LCDKeyboard(Thread):
             elif len(pieces) == 3 and pieces[0] in ['A', 'B']:
                 hora = pieces[1]
                 if not hora.isdigit() or not (0 <= int(hora) <= 23):
+                    self.lcd.write_rotate("Hora invalida, usa 00-23", line=0)
                     return
                 
                 minuto = pieces[2]
@@ -72,11 +74,15 @@ class LCDKeyboard(Thread):
                 return
             
         except Exception as e:
-            self.lcd.write("Instruccion no identificada", line=0)
+            self.lcd.write_rotate("Instruccion no identificada", line=0)
+            
             print("Error al parsear la instruccion:", e)
 
     def force_write(self, message: str, line: int = 0):
         self.lcd.write(message, line=line)
+    
+    def clear(self):
+        self.lcd.clear()
 
     def force_write_rotate(self, message: str, line: int = 0):
         self.lcd.write_rotate(message, line=line)

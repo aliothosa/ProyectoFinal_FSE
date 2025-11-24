@@ -1,5 +1,5 @@
 from queue import Queue
-import rpi.gpio as GPIO
+import RPi.gpio as GPIO
 from src.interface.LCDKeyboard import LCDKeyboard
 from src.functions.Cron import despachar_tarea
 import time

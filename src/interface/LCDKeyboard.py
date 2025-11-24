@@ -90,5 +90,6 @@ class LCDKeyboard(Thread):
         self.lcd.write(" " * 16, line=line)
 
 if __name__ == "__main__":
-    lcd_keyboard = LCDKeyboard()
+    q = Queue()
+    lcd_keyboard = LCDKeyboard(q)
     lcd_keyboard.start()

@@ -1,6 +1,6 @@
 from queue import Queue
 import RPi.GPIO as GPIO
-from interface.Instructions import Tarea
+from src.interface.Instructions import Tarea
 from src.interface.LCDKeyboard import LCDKeyboard
 from src.functions.Cron import despachar_tarea
 import time

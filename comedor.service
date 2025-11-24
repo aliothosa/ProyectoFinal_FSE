@@ -1,0 +1,17 @@
+[Unit]
+Description=Despachador automatico de comida.
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=b7-fse
+WorkingDirectory=/home/b7-fse/Projects/ProyectoFinal_FSE
+ExecStart=/home/b7-fse/Projects/ProyectoFinal_FSE/run_comedor.sh
+Restart=always
+RestartSec=3
+
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target

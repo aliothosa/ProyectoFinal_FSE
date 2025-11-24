@@ -17,7 +17,6 @@ class LCDKeyboard(Thread):
 
     def run(self):
         try:
-            self.lcd.write("Instruccion:    ", line=0)
             while True:
                 self.lcd.write(self.keyboard.get_string(), line=1)
                 if not self.queue.empty():

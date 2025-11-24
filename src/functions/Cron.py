@@ -11,90 +11,86 @@ def despachar_tarea(tarea: Tarea, hora:str, minuto: str, script_path:str = 'scri
             times = json.load(f)
     except Exception as e:
         print("Error al leer times.json:", e)
-        mensaje =  "Error al leer la configuración de tareas."
-        return mensaje
+        return "Error leyendo"
 
     times_backup = deepcopy(times)
 
     try:
         if hora < '00' or hora > '23':
-            mensaje =  f"Hora inválida: {hora}; debe estar entre 00 y 23."
+            return "Hora invalida"
         if minuto < '00' or minuto > '59':
-            mensaje =  f"Minuto inválido: {minuto}; debe estar entre 00 y 59."
-        
+            return "Min invalido"
 
         match (tarea):
             case Tarea.ELIMINAR_TAREA:
                 comando = 'del'
-                if hora  in times['TIMES']:
-                    if minuto in times['TIMES'][hora]:
-                        ID = hora+minuto
-                        times['TIMES'][hora].remove(minuto)
-                        if not times['TIMES'][hora]:
-                            del times['TIMES'][hora]
-                        subprocess.run(['scripts/cron/anx_cron.sh', comando, ID], check=True)
-                        mensaje =  f"Tarea a las {hora}:{minuto} eliminada."
-                    else:
-                        mensaje =  f"No hay tarea programada a las {hora}:{minuto}."
-                    
+                if hora in times['TIMES'] and minuto in times['TIMES'][hora]:
+                    ID = hora + minuto
+                    times['TIMES'][hora].remove(minuto)
+                    if not times['TIMES'][hora]:
+                        del times['TIMES'][hora]
+                    subprocess.run([script_path, comando, ID], check=True)
+                    mensaje = f"Tarea {hora}{minuto} del"
+                else:
+                    mensaje = f"Sin tarea {hora}{minuto}"
+
             case Tarea.AGREGAR_TAREA:
                 comando = 'add'
                 if hora in times['TIMES']:
                     if minuto in times['TIMES'][hora]:
-                        mensaje =  f"Ya existe una tarea programada a las {hora}:{minuto}."
+                        mensaje = "Tarea ya existe"
                     else:
                         times['TIMES'][hora].append(minuto)
-                        subprocess.run(['scripts/cron/anx_cron.sh', comando, hora, minuto, f'{hora}{minuto}'], check=True)
-                        mensaje =  f"Tarea a las {hora}:{minuto} agregada."
+                        subprocess.run([script_path, comando, hora, minuto, f'{hora}{minuto}'], check=True)
+                        mensaje = f"Tarea {hora}{minuto} ok"
                 else:
                     times['TIMES'][hora] = [minuto]
-                    subprocess.run(['scripts/cron/anx_cron.sh', comando, hora, minuto, f'{hora}{minuto}'], check=True)
-                    mensaje =  f"Tarea a las {hora}:{minuto} agregada."
-                
+                    subprocess.run([script_path, comando, hora, minuto, f'{hora}{minuto}'], check=True)
+                    mensaje = f"Tarea {hora}{minuto} ok"
 
             case Tarea.BORRAR_TAREAS_HORA:
                 comando = 'del'
                 if hora in times['TIMES']:
                     for minuto in times['TIMES'][hora]:
-                        ID = hora+minuto
-                        subprocess.run(['scripts/cron/anx_cron.sh', comando, ID], check=True)
+                        ID = hora + minuto
+                        subprocess.run([script_path, comando, ID], check=True)
                     del times['TIMES'][hora]
-                    mensaje =  f"Tareas a las {hora}:** eliminadas."
-                
+                    mensaje = f"Tareas {hora}** del"
                 else:
-                    mensaje =  f"No hay tareas programadas a las {hora}:**."
-            
+                    mensaje = f"Sin tareas {hora}"
+
             case Tarea.BORRAR_TODAS_LAS_TAREAS:
                 comando = 'del'
-                for hora, minutos in times['TIMES'].items():
-                    for minuto in minutos:
-                        ID = hora+minuto
-                        subprocess.run(['scripts/cron/anx_cron.sh', comando, ID], check=True)
+                for hora_, minutos in times['TIMES'].items():
+                    for minuto_ in minutos:
+                        ID = hora_ + minuto_
+                        subprocess.run([script_path, comando, ID], check=True)
                 times['TIMES'].clear()
-                mensaje =  "Todas las tareas eliminadas."
-            
+                mensaje = "Todas borradas"
+
             case Tarea.DISPENSAR_COMIDA:
                 subprocess.run(['python3', 'scripts/dispensa_comida.py'], check=True)
-                mensaje =  "Comida dispensada."
-            
+                mensaje = "Dispensado ok"
+
             case Tarea.OBTENER_IDS_TAREAS:
-                ids_tareas = ''
-                for hora, minutos in times['TIMES'].items():
-                    for minuto in minutos:
-                        ids_tareas += f"{hora}:{minuto};"
-                mensaje =  ids_tareas.strip()
-            
+                ids = ''
+                for h, mins in times['TIMES'].items():
+                    for m in mins:
+                        ids += f"{h}{m};"
+                mensaje = ids.strip(";")
+
             case None:
-                mensaje =  "Tarea desconocida."
-        
+                mensaje = "Tarea desconoc."
+
     except Exception as e:
         with open('data/times.json', 'w', encoding='ascii') as f:
             json.dump(times_backup, f, indent=4)
-        mensaje =  f"Error al despachar tarea: {str(e)}"
+        mensaje = "Error despacho"
     finally:
         with open('data/times.json', 'w', encoding='ascii') as f:
             json.dump(times, f, indent=4)
         return mensaje
+
 
 if __name__ == "__main__":
     # Ejemplo de uso

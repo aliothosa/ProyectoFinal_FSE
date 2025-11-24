@@ -40,14 +40,15 @@ class ListenerBoton(Thread):
                     instruccion, hora, minuto = self.q.get()
                     mensaje = despachar_tarea(instruccion, f"{hora}", f"{minuto}")
                     if mensaje:
-                        self.interface.force_write_rotate(mensaje, line=0)
+                        self.interface.force_write(mensaje, line=0)
 
                 time_since_last_instruction = time.perf_counter() - t_inicial
-                
+
                 if time_since_last_instruction > 120.0:
                     self.interface.force_write_rotate("Tiempo de inactividad excedido", line=0)
                     self.engage = False
                     break
+                time.sleep(0.5) 
 
             except Exception as e:
                 print("Error en el loop principal:", e)

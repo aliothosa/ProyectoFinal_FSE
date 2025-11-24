@@ -59,7 +59,7 @@ class LCDKeyboard(Thread):
                     self.lcd.write_rotate(f"Dispensando comida a las {hora}:{minuto}", line=0)
                     self.queue_salida.put((Tarea.AGREGAR_TAREA, int(hora), int(minuto)))
                 case "B":
-                    self.lcd.write(f"Borrando instruccion a las {hora}:{minuto}", line=0)
+                    self.lcd.write_rotate(f"Borrando instruccion a las {hora}:{minuto}", line=0)
                     self.queue_salida.put((Tarea.ELIMINAR_TAREA, int(hora), int(minuto)))
                 case "BB":
                     self.lcd.write("Borrando hora", line=0)

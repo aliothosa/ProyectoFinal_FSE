@@ -54,6 +54,9 @@ class ListenerBoton(Thread):
                     self.interface.post_write("Saliendo...     ", line=1)
                     self.interface.clear()
                     time.sleep(5)
+                    self.interface.post_write("                ", line=0)
+                    self.interface.post_write("                ", line=1)
+                    time.sleep(1)
                     self.engage = False
                     break
                 time.sleep(0.5) 

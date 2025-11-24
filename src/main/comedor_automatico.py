@@ -33,8 +33,7 @@ class ListenerBoton(Thread):
         self.interface = LCDKeyboard(q=self.q)
         self.interface.start()
         t_inicial = time.perf_counter()
-        self.interface.force_write(" " * 16, line=0)
-        self.interface.force_write("Bienvenido", line=0)
+        self.interface.force_write("Bienvenido      ", line=0)
         self.interface.force_write(" " * 16, line=1)
 
 

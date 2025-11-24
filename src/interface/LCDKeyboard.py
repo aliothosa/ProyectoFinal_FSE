@@ -84,6 +84,7 @@ class LCDKeyboard(Thread):
             self.lcd.write_rotate("Instruccion no identificada", line=0)
             
             print("Error al parsear la instruccion:", e)
+            
     def stop(self):
         self.active = False
         self.keyboard.stop()

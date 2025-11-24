@@ -1,9 +1,10 @@
 from __future__ import annotations
 import subprocess, json
-import sys
+import sys, os
 from unittest import case
 from src.interface.Instructions import Tarea
 from copy import deepcopy
+
 
 def despachar_tarea(tarea: Tarea, hora:str, minuto: str,
                     script_path:str = 'scripts/cron/anx_cron.sh') -> str:

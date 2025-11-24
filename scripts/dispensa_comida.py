@@ -1,14 +1,23 @@
-import os, sys
+import os
+import sys
 
+# Ruta absoluta a este archivo: .../ProyectoFinal_FSE/scripts/dispensa_comida.py
+CURRENT_FILE = os.path.abspath(__file__)
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# Proyecto raíz: .../ProyectoFinal_FSE
+PROJECT_ROOT = os.path.dirname(os.path.dirname(CURRENT_FILE))
 
+# Carpeta src: .../ProyectoFinal_FSE/src
+SRC_DIR = os.path.join(PROJECT_ROOT, "src")
 
-sys.path.insert(0, BASE_DIR)
+# Aseguramos que src/ esté en sys.path
+if SRC_DIR not in sys.path:
+    sys.path.insert(0, SRC_DIR)
 
-from src.hardware.LoadCell import LoadCell
-from src.hardware.Servo import Servo
-from src.hardware.Buzzer import Buzzer
+# 👇 OJO: a partir de aquí importas SIN "src."
+from hardware.LoadCell import LoadCell
+from hardware.Servo import Servo
+from hardware.Buzzer import Buzzer
 import time
 
 OFFSET_LOAD_CELL = -464106.52  # Ajustar si se conoce un offset específico

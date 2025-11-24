@@ -35,10 +35,10 @@ class ListenerBoton(Thread):
         t_inicial = time.perf_counter()
         self.interface.clear()
         self.interface.post_write("Bienvenido      ", line=0)
+        time.sleep(2)
 
         while self.engage:
             try:
-
                 self.interface.post_write("Instruccion:    ", line=0)
                 if not self.q.empty():
                     instruccion, hora, minuto = self.q.get()
@@ -64,7 +64,6 @@ class ListenerBoton(Thread):
                 break
 
             finally:
-
                 self.interface.stop()
                 self.interface.join()
                 del self.interface

@@ -44,4 +44,4 @@ def dispatch_food(objetivo_gramos: float, tolerancia_gramos: float = 5.0):
         print("Peso final:", load_cell.get_weight(), "g")
 
 if __name__ == "__main__":
-    dispatch_food(120)# Desp
+    dispatch_food(80)# Desp

@@ -41,6 +41,9 @@ class ListenerBoton(Thread):
                     mensaje = despachar_tarea(instruccion, f"{hora}", f"{minuto}")
                     if mensaje:
                         self.interface.force_write(mensaje, line=0)
+                        self.interface.sleep(5)
+
+                    t_inicial = time.perf_counter()
 
                 time_since_last_instruction = time.perf_counter() - t_inicial
 

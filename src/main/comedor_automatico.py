@@ -43,7 +43,7 @@ class ListenerBoton(Thread):
                         self.interface.force_write_rotate(mensaje, line=0)
 
                 time_since_last_instruction = time.perf_counter() - t_inicial
-                print("Tiempo desde ultima instruccion:", time_since_last_instruction)
+                
                 if time_since_last_instruction > 120.0:
                     self.interface.force_write_rotate("Tiempo de inactividad excedido", line=0)
                     self.engage = False

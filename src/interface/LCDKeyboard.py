@@ -24,7 +24,7 @@ class LCDKeyboard(Thread):
                     self.parse_instruccion(self.queue.get())
                     self.lcd.write(" "*16, line=1)
                     self.lcd.clear()
-                    self.lcd.write("Instruccion:\n" + self.keyboard.get_string(), line=0)
+                    self.lcd.write_rotate("Instruccion: " + self.keyboard.get_string(), line=0)
                 time.sleep(0.1)
         except KeyboardInterrupt:
             self.keyboard.stop()

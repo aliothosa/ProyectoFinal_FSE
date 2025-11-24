@@ -30,7 +30,7 @@ class ListenerBoton(Thread):
     def start_operations(self):
         self.q = Queue()
         self.interface = LCDKeyboard(q=self.q)
-        time_since_last_instruction = time.perf_counter()
+        t_inicial = time.perf_counter()
         self.interface.force_write("Bienvenido", line=0)
 
         while self.engage:
@@ -41,7 +41,7 @@ class ListenerBoton(Thread):
                     if mensaje:
                         self.interface.force_write_rotate(mensaje, line=0)
 
-                time_since_last_instruction = time.perf_counter() - time_since_last_instruction
+                time_since_last_instruction = time.perf_counter() - t_inicial
 
                 if time_since_last_instruction > 120.0:
                     self.interface.force_write_rotate("Tiempo de inactividad excedido", line=0)
@@ -57,6 +57,7 @@ if __name__ == "__main__":
     try:
         main = ListenerBoton()
         main.start()
+        main.join()
     except KeyboardInterrupt:
         GPIO.cleanup()
     except Exception as e:
